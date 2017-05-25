@@ -4,7 +4,12 @@
     tools:context="com.blackphantom.blackcoinbroker.MainActivity">
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="200"
         android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_aktualisiere"
+        android:orderInCategory="100"
+        android:title="Aktualisiere"
         app:showAsAction="never" />
 </menu>

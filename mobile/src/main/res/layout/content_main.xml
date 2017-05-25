@@ -8,9 +8,85 @@
     tools:context="com.blackphantom.blackcoinbroker.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <ListView
+    <TextView
+        android:id="@+id/TV_BlkKurs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/IV_Blk"
+        android:ems="8"
+        android:inputType="textPersonName"
+        android:paddingLeft="10dp"
+        android:textAlignment="textStart"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/IV_Blk"
+        android:layout_width="85dp"
+        android:layout_height="75dp"
+        android:paddingLeft="10dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/blackcoin" />
+
+    <TextView
+        android:id="@+id/TV_Marktkap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/TV_BlkKurs"
+        android:paddingLeft="10dp"
+        android:text="Marktkapitalisierung:  "
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/TV_BlkAenderung"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/TV_BlkKurs"
+        android:layout_alignBottom="@+id/TV_BlkKurs"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_toEndOf="@+id/TV_BlkKurs"
+        android:layout_toRightOf="@+id/TV_BlkKurs"
+        android:paddingRight="10dp"
+        android:text="%"
+        android:textAlignment="textEnd"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/TV_Blk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/TV_BlkKurs"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/IV_Blk"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="Blackcoin"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        tools:text="Blackcoin" />
+
+    <View
+        android:id="@+id/Seperator1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp" />
+        android:layout_height="1dp"
+        android:layout_below="@+id/IV_Blk"
+        android:background="@color/common_google_signin_btn_text_dark_disabled"/>
+
+    <View
+        android:id="@+id/Seperator2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/TV_BlkKurs"
+        android:background="@color/common_google_signin_btn_text_dark_disabled" />
+
 </android.widget.RelativeLayout>
