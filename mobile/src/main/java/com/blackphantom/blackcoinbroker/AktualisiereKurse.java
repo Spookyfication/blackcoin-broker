@@ -1,5 +1,6 @@
 package com.blackphantom.blackcoinbroker;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -17,6 +18,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by BPS on 25.05.2017.
@@ -25,13 +28,25 @@ import java.net.URL;
 public class AktualisiereKurse extends AsyncTask<String, Integer, String[]> {
     private final String LOG_TAG = AktualisiereKurse.class.getSimpleName();
     private Context context;
-    private TextView TV_BlkKurs, TV_Marktkap, TV_BlkAenderung;
+    private TextView TV_BlkKurs, TV_Marktkap, TV_BlkAenderung, TV_BlkAenderungEuro, TV_Euro, TV_Percent, TV_Uhrzeit;
+    private ProgressDialog dialog;
 
-    public AktualisiereKurse(Context context, TextView TV_BlkKurs, TextView TV_Marktkap, TextView TV_BlkAenderung){
+    public AktualisiereKurse(Context context, TextView TV_BlkKurs, TextView TV_Marktkap, TextView TV_BlkAenderung, TextView TV_BlkAenderungEuro, TextView TV_Euro, TextView TV_Percent, TextView TV_Uhrzeit){
         this.context = context;
         this.TV_BlkKurs = TV_BlkKurs;
         this.TV_Marktkap = TV_Marktkap;
         this.TV_BlkAenderung = TV_BlkAenderung;
+        this.TV_BlkAenderungEuro = TV_BlkAenderungEuro;
+        this.TV_Euro = TV_Euro;
+        this.TV_Percent = TV_Percent;
+        this.TV_Uhrzeit = TV_Uhrzeit;
+        dialog = new ProgressDialog(context);
+    }
+
+    @Override
+    protected void onPreExecute() {
+        this.dialog.setMessage("Bitte warten");
+        this.dialog.show();
     }
 
     @Override
@@ -92,20 +107,40 @@ public class AktualisiereKurse extends AsyncTask<String, Integer, String[]> {
             JSONObject jObject = jArray.getJSONObject(0);
 
             String kursEuro = jObject.getString("price_eur");
+            double kursEurof = Double.parseDouble(kursEuro);
             String kursDollar = jObject.getString("price_usd");
             String marktkapitalisierungEuro = jObject.getString("market_cap_eur");
             String marktkapitalisierungDollar = jObject.getString("market_cap_usd");
             String aenderung24 = jObject.getString("percent_change_24h");
-            TV_BlkKurs.setText(kursEuro.substring(0,7)+" €/BLK");
+            double aenderung24f = Double.parseDouble(aenderung24);
+            double anderung24euro = kursEurof-(kursEurof/(1+(aenderung24f/100)));
+            TV_BlkKurs.setText(kursEuro.substring(0,7));
             TV_Marktkap.setText("Marktkapitalisierung: "+marktkapitalisierungEuro+"€");
             if(aenderung24.charAt(0) == '-'){
                 TV_BlkAenderung.setTextColor(Color.RED);
+                TV_BlkAenderungEuro.setTextColor(Color.RED);
+                TV_Euro.setTextColor(Color.RED);
+                TV_Euro.setText("▼  EUR");
+                TV_Percent.setTextColor(Color.RED);
             }else{
                 TV_BlkAenderung.setTextColor(Color.GREEN);
+                TV_BlkAenderungEuro.setTextColor(Color.GREEN);
+                TV_Euro.setTextColor(Color.GREEN);
+                TV_Euro.setText("▲  EUR");
+                TV_Percent.setTextColor(Color.GREEN);
             }
             TV_BlkAenderung.setText(aenderung24+"%");
+            TV_BlkAenderungEuro.setText(Double.toString(anderung24euro).substring(0,7));
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+            TV_Uhrzeit.setText("Zeit: "+sdf.format(new Date()));
         } catch (JSONException e) {
             Log.e("JSONException", "Error: " + e.toString());
         }
+
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
+
+        Toast.makeText(context, "Kurse wurden aktualisiert", Toast.LENGTH_SHORT).show();
     }
 }

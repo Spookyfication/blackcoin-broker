@@ -15,6 +15,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView TV_BlkKurse;
     private TextView TV_Marktkap;
     private TextView TV_BlkAenderung;
+    private TextView TV_BlkAenderungEuro;
+    private TextView TV_Euro;
+    private TextView TV_Percent;
+    private TextView TV_Uhrzeit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +39,11 @@ public class MainActivity extends AppCompatActivity {
         TV_BlkKurse = (TextView) findViewById(R.id.TV_BlkKurs);
         TV_Marktkap = (TextView) findViewById(R.id.TV_Marktkap);
         TV_BlkAenderung = (TextView) findViewById(R.id.TV_BlkAenderung);
-        AktualisiereKurse aktKurse = new AktualisiereKurse(this, TV_BlkKurse, TV_Marktkap, TV_BlkAenderung);
+        TV_BlkAenderungEuro = (TextView) findViewById(R.id.TV_BlkAenderungEuro);
+        TV_Euro = (TextView) findViewById(R.id.TV_Euro);
+        TV_Percent = (TextView) findViewById(R.id.TV_Percent);
+        TV_Uhrzeit = (TextView) findViewById(R.id.TV_Uhrzeit);
+        AktualisiereKurse aktKurse = new AktualisiereKurse(this, TV_BlkKurse, TV_Marktkap, TV_BlkAenderung, TV_BlkAenderungEuro, TV_Euro, TV_Percent, TV_Uhrzeit);
         aktKurse.execute();
     }
 
@@ -57,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }else if(id == R.id.action_aktualisiere) {
-            AktualisiereKurse aktKurse = new AktualisiereKurse(this, TV_BlkKurse, TV_Marktkap, TV_BlkAenderung);
+            AktualisiereKurse aktKurse = new AktualisiereKurse(this, TV_BlkKurse, TV_Marktkap, TV_BlkAenderung, TV_BlkAenderungEuro, TV_Euro, TV_Percent, TV_Uhrzeit);
             aktKurse.execute();
         }
 

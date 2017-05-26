@@ -15,18 +15,21 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/IV_Blk"
-        android:ems="8"
+        android:ems="5"
         android:inputType="textPersonName"
         android:paddingLeft="10dp"
+        android:text="0,23743"
         android:textAlignment="textStart"
-        android:textSize="24sp"
+        android:textSize="36sp"
         android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/IV_Blk"
         android:layout_width="85dp"
-        android:layout_height="75dp"
+        android:layout_height="85dp"
+        android:paddingBottom="5dp"
         android:paddingLeft="10dp"
+        android:paddingTop="5dp"
         android:scaleType="fitXY"
         app:srcCompat="@drawable/blackcoin" />
 
@@ -44,31 +47,32 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/TV_BlkAenderung"
+        android:id="@+id/TV_Uhrzeit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/TV_BlkKurs"
-        android:layout_alignBottom="@+id/TV_BlkKurs"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_toEndOf="@+id/TV_BlkKurs"
-        android:layout_toRightOf="@+id/TV_BlkKurs"
-        android:paddingRight="10dp"
-        android:text="%"
-        android:textAlignment="textEnd"
-        android:textSize="24sp" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/TV_Marktkap"
+        android:paddingLeft="10dp"
+        android:text="Marktkapitalisierung:  "
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/TV_Blk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/TV_BlkKurs"
+        android:layout_above="@+id/tableLayout"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/IV_Blk"
         android:layout_toRightOf="@+id/IV_Blk"
         android:gravity="center_vertical"
+        android:paddingBottom="5dp"
         android:paddingLeft="10dp"
+        android:paddingTop="5dp"
         android:text="Blackcoin"
         android:textAlignment="center"
         android:textSize="36sp"
@@ -86,7 +90,71 @@
         android:id="@+id/Seperator2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginTop="1dp"
         android:layout_below="@+id/TV_BlkKurs"
         android:background="@color/common_google_signin_btn_text_dark_disabled" />
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/Seperator1"
+        android:layout_toEndOf="@+id/TV_BlkKurs"
+        android:background="@android:color/darker_gray"
+        android:stretchColumns="*"
+        android:layout_above="@+id/TV_Marktkap">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="1dp">
+
+            <TextView
+                android:id="@+id/TV_Euro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/colorBackground"
+                android:text="EUR"
+                android:textAlignment="textEnd"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/TV_Percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:background="?android:attr/colorBackground"
+                android:text="%"
+                android:textAlignment="textEnd"
+                android:textSize="18sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TV_BlkAenderungEuro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/colorBackground"
+                android:text="€"
+                android:textAlignment="textEnd"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/TV_BlkAenderung"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:background="?android:attr/colorBackground"
+                android:text="%"
+                android:textAlignment="textEnd"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </TableRow>
+    </TableLayout>
 
 </android.widget.RelativeLayout>
