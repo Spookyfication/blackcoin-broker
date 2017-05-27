@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">BlackCoin Broker</string>
     <string name="action_settings">Settings</string>
+    <string name="tv_blackcoin" translatable="false">Blackcoin</string>
+    <string name="action_update">Refresh</string>
+    <string name="tv_market_cap">Market capitalization</string>
+    <string name="tv_time">Time</string>
 </resources>

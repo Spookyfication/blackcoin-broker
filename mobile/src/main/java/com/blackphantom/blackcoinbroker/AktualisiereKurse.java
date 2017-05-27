@@ -115,7 +115,7 @@ public class AktualisiereKurse extends AsyncTask<String, Integer, String[]> {
             double aenderung24f = Double.parseDouble(aenderung24);
             double anderung24euro = kursEurof-(kursEurof/(1+(aenderung24f/100)));
             TV_BlkKurs.setText(kursEuro.substring(0,7));
-            TV_Marktkap.setText("Marktkapitalisierung: "+marktkapitalisierungEuro+"€");
+            TV_Marktkap.setText(context.getResources().getString(R.string.tv_market_cap)+": "+marktkapitalisierungEuro+"€");
             if(aenderung24.charAt(0) == '-'){
                 TV_BlkAenderung.setTextColor(Color.RED);
                 TV_BlkAenderungEuro.setTextColor(Color.RED);
@@ -132,7 +132,7 @@ public class AktualisiereKurse extends AsyncTask<String, Integer, String[]> {
             TV_BlkAenderung.setText(aenderung24+"%");
             TV_BlkAenderungEuro.setText(Double.toString(anderung24euro).substring(0,7));
             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-            TV_Uhrzeit.setText("Zeit: "+sdf.format(new Date()));
+            TV_Uhrzeit.setText(context.getResources().getString(R.string.tv_time)+": "+sdf.format(new Date()));
         } catch (JSONException e) {
             Log.e("JSONException", "Error: " + e.toString());
         }
