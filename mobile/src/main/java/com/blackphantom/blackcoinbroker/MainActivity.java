@@ -1,15 +1,22 @@
 package com.blackphantom.blackcoinbroker;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     private TextView TV_BlkKurse;
@@ -19,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView TV_Euro;
     private TextView TV_Percent;
     private TextView TV_Uhrzeit;
+    private DatabaseHandler db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +39,27 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.super.getBaseContext());
+                builder.setTitle("Anzahl Bitcoins eingeben");
+                final EditText input = new EditText(MainActivity.super.getBaseContext());
+                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                builder.setView(input);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        int blk = Integer.parseInt(input.getText().toString());
+                        db = new DatabaseHandler(MainActivity.super.getBaseContext());
+                        db.addDepot(new Depot(blk, 0.0, new Date(2017,06,12)));
+                    }
+                });
+                builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
                 Snackbar.make(view, "Funtion to add your Wallet will be added later", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }

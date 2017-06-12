@@ -65,7 +65,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
-        DateFormat format = new SimpleDateFormat("dd. MM. yyyy");
+        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         Depot depot = null;
         try {
             depot = new Depot(Integer.parseInt(cursor.getString(0)),
