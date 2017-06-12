@@ -155,4 +155,12 @@
         </TableRow>
     </TableLayout>
 
+    <ListView
+        android:id="@+id/LV_Depots"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/TV_Uhrzeit" />
+
 </android.widget.RelativeLayout>

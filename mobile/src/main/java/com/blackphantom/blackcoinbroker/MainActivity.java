@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView TV_Euro;
     private TextView TV_Percent;
     private TextView TV_Uhrzeit;
+    private ListView LV_Depots;
     private DatabaseHandler db;
 
     @Override
@@ -73,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
         TV_Euro = (TextView) findViewById(R.id.TV_Euro);
         TV_Percent = (TextView) findViewById(R.id.TV_Percent);
         TV_Uhrzeit = (TextView) findViewById(R.id.TV_Uhrzeit);
+        LV_Depots = (ListView) findViewById(R.id.LV_Depots);
+
         AktualisiereKurse aktKurse = new AktualisiereKurse(this, TV_BlkKurse, TV_Marktkap, TV_BlkAenderung, TV_BlkAenderungEuro, TV_Euro, TV_Percent, TV_Uhrzeit);
         aktKurse.execute();
     }
