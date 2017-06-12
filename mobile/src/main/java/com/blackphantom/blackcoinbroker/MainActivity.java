@@ -1,11 +1,11 @@
 package com.blackphantom.blackcoinbroker;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
@@ -35,20 +35,21 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        final Context c = this;
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.super.getBaseContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(c);
                 builder.setTitle("Anzahl Bitcoins eingeben");
-                final EditText input = new EditText(MainActivity.super.getBaseContext());
+                final EditText input = new EditText(c);
                 input.setInputType(InputType.TYPE_CLASS_NUMBER);
                 builder.setView(input);
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         int blk = Integer.parseInt(input.getText().toString());
-                        db = new DatabaseHandler(MainActivity.super.getBaseContext());
+                        db = new DatabaseHandler(c);
                         db.addDepot(new Depot(blk, 0.0, new Date(2017,06,12)));
                     }
                 });
