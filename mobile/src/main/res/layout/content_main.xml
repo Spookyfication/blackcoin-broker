@@ -92,6 +92,13 @@
         android:layout_below="@+id/TV_BlkKurs"
         android:background="@color/common_google_signin_btn_text_dark_disabled" />
 
+    <View
+        android:id="@+id/Seperator3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_below="@+id/TV_Uhrzeit"
+        android:background="@color/common_google_signin_btn_text_dark_disabled" />
     <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="match_parent"

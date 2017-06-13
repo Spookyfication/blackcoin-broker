@@ -9,6 +9,7 @@ import java.util.Date;
 public class Depot {
     private int id;
     private double anzahlBlackcoins;
+    private double wertBlackcoins = 10.5;
     private double kaufpreis;
     private Date datum;
 
@@ -39,6 +40,14 @@ public class Depot {
 
     public double getAnzahlBlackcoins(){
         return anzahlBlackcoins;
+    }
+
+    public void setWertBlackcoins(double kurs){
+        this.wertBlackcoins = anzahlBlackcoins * kurs;
+    }
+
+    public double getWertBlackcoins(){
+        return wertBlackcoins;
     }
 
     public void setKaufpreis(double kaufpreis){

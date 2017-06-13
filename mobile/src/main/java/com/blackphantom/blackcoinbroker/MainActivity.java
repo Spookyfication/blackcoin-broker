@@ -12,11 +12,13 @@ import android.text.InputType;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView TV_Uhrzeit;
     private ListView LV_Depots;
     private DatabaseHandler db;
+    private ArrayList<Depot> depots;
+    private ArrayAdapter<Depot> LV_Depots_Adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         int blk = Integer.parseInt(input.getText().toString());
                         db = new DatabaseHandler(c);
-                        db.addDepot(new Depot(blk, 0.0, new Date(2017,06,12)));
+                        db.addDepot(new Depot(blk, 0.0, new Date()));
                     }
                 });
                 builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
@@ -63,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
                 });
 
                 builder.show();
-                Snackbar.make(view, "Funtion to add your Wallet will be added later", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
             }
         });
 
@@ -76,10 +78,15 @@ public class MainActivity extends AppCompatActivity {
         TV_Percent = (TextView) findViewById(R.id.TV_Percent);
         TV_Uhrzeit = (TextView) findViewById(R.id.TV_Uhrzeit);
         LV_Depots = (ListView) findViewById(R.id.LV_Depots);
-        ArrayAdapter<String> LV_Depots_Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        db = new DatabaseHandler(this);
+        depots = db.getAllDepots();
+        LV_Depots_Adapter = new DepotArrayAdapter(this, 0, depots);
+        //ArrayAdapter<String> LV_Depots_Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         LV_Depots.setAdapter(LV_Depots_Adapter);
 
-        AktualisiereKurse aktKurse = new AktualisiereKurse(this, TV_BlkKurse, TV_Marktkap, TV_BlkAenderung, TV_BlkAenderungEuro, TV_Euro, TV_Percent, TV_Uhrzeit, LV_Depots_Adapter);
+
+
+        AktualisiereKurse aktKurse = new AktualisiereKurse(this, TV_BlkKurse, TV_Marktkap, TV_BlkAenderung, TV_BlkAenderungEuro, TV_Euro, TV_Percent, TV_Uhrzeit, depots, LV_Depots_Adapter);
         aktKurse.execute();
     }
 
@@ -101,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }else if(id == R.id.action_aktualisiere) {
-            AktualisiereKurse aktKurse = new AktualisiereKurse(this, TV_BlkKurse, TV_Marktkap, TV_BlkAenderung, TV_BlkAenderungEuro, TV_Euro, TV_Percent, TV_Uhrzeit);
+            AktualisiereKurse aktKurse = new AktualisiereKurse(this, TV_BlkKurse, TV_Marktkap, TV_BlkAenderung, TV_BlkAenderungEuro, TV_Euro, TV_Percent, TV_Uhrzeit, depots, LV_Depots_Adapter);
             aktKurse.execute();
         }
 

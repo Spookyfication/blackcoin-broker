@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String CREATE_DEPOT_TABLE = "CREATE TABLE " + TABLE_DEPOTS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_ANZAHL + " FLOAT,"
-                + KEY_KAUFPREIS + " FLOAT," + KEY_DATUM + " DATE" + ")";
+                + KEY_KAUFPREIS + " FLOAT," + KEY_DATUM + " TEXT" + ")";
         sqLiteDatabase.execSQL(CREATE_DEPOT_TABLE);
     }
 
@@ -48,11 +49,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public void addDepot(Depot depot){
         SQLiteDatabase db = this.getWritableDatabase();
-
+        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         ContentValues values = new ContentValues();
         values.put(KEY_ANZAHL, depot.getAnzahlBlackcoins());
         values.put(KEY_KAUFPREIS, depot.getKaufpreis());
-        values.put(KEY_DATUM, depot.getDatum().toString());
+        values.put(KEY_DATUM, format.format(depot.getDatum()).toString());
         db.insert(TABLE_DEPOTS, null, values);
         db.close();
     }
@@ -76,16 +77,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return depot;
     }
     
-    public List<Depot> getAllDepots(){
-        List<Depot> depotList = new ArrayList<Depot>;
+    public ArrayList<Depot> getAllDepots(){
+        ArrayList<Depot> depotList = new ArrayList<Depot>();
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + TABLE_DEPOTS;
         Cursor cursor = db.rawQuery(selectQuery, null);
         DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         if(cursor.moveToFirst()){
             do{
-                depot = new Depot(Integer.parseInt(cursor.getString(0)), Double.parseDouble(cursor.getString(1)), Double.parseDouble(cursor.getString(2)), format.parse(cursor.getString(3)));
-                depotList.add(depot);
+                Depot depot = null;
+                try {
+                    depot = new Depot(Integer.parseInt(cursor.getString(0)), Double.parseDouble(cursor.getString(1)), Double.parseDouble(cursor.getString(2)), format.parse(cursor.getString(3)));
+                    depotList.add(depot);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }while(cursor.moveToNext());
         }
         

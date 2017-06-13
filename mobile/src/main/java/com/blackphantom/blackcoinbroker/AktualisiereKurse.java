@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -30,8 +32,10 @@ public class AktualisiereKurse extends AsyncTask<String, Integer, String[]> {
     private Context context;
     private TextView TV_BlkKurs, TV_Marktkap, TV_BlkAenderung, TV_BlkAenderungEuro, TV_Euro, TV_Percent, TV_Uhrzeit;
     private ProgressDialog dialog;
+    private ArrayList<Depot> depots;
+    private ArrayAdapter<Depot> depot_adapter;
 
-    public AktualisiereKurse(Context context, TextView TV_BlkKurs, TextView TV_Marktkap, TextView TV_BlkAenderung, TextView TV_BlkAenderungEuro, TextView TV_Euro, TextView TV_Percent, TextView TV_Uhrzeit){
+    public AktualisiereKurse(Context context, TextView TV_BlkKurs, TextView TV_Marktkap, TextView TV_BlkAenderung, TextView TV_BlkAenderungEuro, TextView TV_Euro, TextView TV_Percent, TextView TV_Uhrzeit, ArrayList<Depot> depots, ArrayAdapter<Depot> depot_adapter){
         this.context = context;
         this.TV_BlkKurs = TV_BlkKurs;
         this.TV_Marktkap = TV_Marktkap;
@@ -40,6 +44,8 @@ public class AktualisiereKurse extends AsyncTask<String, Integer, String[]> {
         this.TV_Euro = TV_Euro;
         this.TV_Percent = TV_Percent;
         this.TV_Uhrzeit = TV_Uhrzeit;
+        this.depots = depots;
+        this.depot_adapter = depot_adapter;
         dialog = new ProgressDialog(context);
     }
 
@@ -116,6 +122,10 @@ public class AktualisiereKurse extends AsyncTask<String, Integer, String[]> {
             double anderung24euro = kursEurof-(kursEurof/(1+(aenderung24f/100)));
             TV_BlkKurs.setText(kursEuro.substring(0,7));
             TV_Marktkap.setText(context.getResources().getString(R.string.tv_market_cap)+": "+marktkapitalisierungEuro+"€");
+            for(Depot temp : depots){
+                temp.setWertBlackcoins(kursEurof);
+            }
+            depot_adapter.notifyDataSetChanged();
             if(aenderung24.charAt(0) == '-'){
                 TV_BlkAenderung.setTextColor(Color.RED);
                 TV_BlkAenderungEuro.setTextColor(Color.RED);
