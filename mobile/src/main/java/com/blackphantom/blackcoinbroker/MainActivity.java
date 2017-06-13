@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> LV_Depots_Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         LV_Depots.setAdapter(LV_Depots_Adapter);
 
-        AktualisiereKurse aktKurse = new AktualisiereKurse(this, TV_BlkKurse, TV_Marktkap, TV_BlkAenderung, TV_BlkAenderungEuro, TV_Euro, TV_Percent, TV_Uhrzeit);
+        AktualisiereKurse aktKurse = new AktualisiereKurse(this, TV_BlkKurse, TV_Marktkap, TV_BlkAenderung, TV_BlkAenderungEuro, TV_Euro, TV_Percent, TV_Uhrzeit, LV_Depots_Adapter);
         aktKurse.execute();
     }
 
