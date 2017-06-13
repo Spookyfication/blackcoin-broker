@@ -68,12 +68,27 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         Depot depot = null;
         try {
-            depot = new Depot(Integer.parseInt(cursor.getString(0)),
-                    Double.parseDouble(cursor.getString(1)), Double.parseDouble(cursor.getString(2)), format.parse(cursor.getString(3)));
+            depot = new Depot(Integer.parseInt(cursor.getString(0)), Double.parseDouble(cursor.getString(1)), Double.parseDouble(cursor.getString(2)), format.parse(cursor.getString(3)));
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
         }
         return depot;
+    }
+    
+    public List<Depot> getAllDepots(){
+        List<Depot> depotList = new ArrayList<Depot>;
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + TABLE_DEPOTS;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        if(cursor.moveToFirst()){
+            do{
+                depot = new Depot(Integer.parseInt(cursor.getString(0)), Double.parseDouble(cursor.getString(1)), Double.parseDouble(cursor.getString(2)), format.parse(cursor.getString(3)));
+                depotList.add(depot);
+            }while(cursor.moveToNext());
+        }
+        
+        return depotList;
     }
 }
